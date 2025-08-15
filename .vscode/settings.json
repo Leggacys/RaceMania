@@ -56,5 +56,8 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "RacingMania.sln"
+    "dotnet.defaultSolution": "RacingMania.sln",
+    "cSpell.words": [
+        "Cinemachine"
+    ]
 }

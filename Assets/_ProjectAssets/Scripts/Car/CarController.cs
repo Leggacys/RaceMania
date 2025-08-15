@@ -1,22 +1,26 @@
+using System;
 using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
-    public WheelCollider frontLeft;
-    public WheelCollider frontRight;
-    public WheelCollider rearLeft;
-    public WheelCollider rearRight;
+    public static Action<bool> onDriftStateChanged;
 
-    public float motorTorque = 1500f;
-    public float maxSteerAngle = 30f;
+    [SerializeField] private WheelCollider frontLeft;
+    [SerializeField] private WheelCollider frontRight;
+    [SerializeField] private WheelCollider rearLeft;
+    [SerializeField] private WheelCollider rearRight;
+
+    [SerializeField] private float motorTorque = 1500f;
+    [SerializeField] private float maxSteerAngle = 30f;
 
     [Header("Drift Settings")]
-    public float driftSlip = 0.2f;
-    public float normalSlip = 0.05f;
-    public float normalStiffness = 1.0f;
-    public float driftStiffness = 0.5f;
-    public float driftSpeedThreshold = 20f;
-    public float minSteerToDrift = 0.3f;
+    [SerializeField] private float driftSlip = 0.2f;
+    [SerializeField] private float normalSlip = 0.05f;
+    [SerializeField] private float normalStiffness = 1.0f;
+    [SerializeField] private float driftStiffness = 0.5f;
+    [SerializeField] private float driftSpeedThreshold = 20f;
+    [SerializeField] private float minSteerToDrift = 0.3f;
+
 
     private float steerInput;
     private float throttleInput;
@@ -62,6 +66,8 @@ public class CarController : MonoBehaviour
 
         float slip = drifting ? driftSlip : normalSlip;
         float stiffness = drifting ? driftStiffness : normalStiffness;
+
+        onDriftStateChanged?.Invoke(drifting);
 
         friction.extremumSlip = slip;
         friction.asymptoteSlip = slip * 1.5f;
